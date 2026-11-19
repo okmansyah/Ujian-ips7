@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#076e30">
+<title>CBT Ujian IPS Kelas VII — MTs Nurul Kamal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --g900:#05431f; --g800:#076e30; --g700:#088a3b; --g600:#0f9a45; --g500:#17b052;
+    --g100:#dff2e6; --g50:#eff9f2;
+    --gold:#f2c84e; --gold-d:#cf9b1e; --gold-ink:#5a4208;
+    --ink:#15241b; --muted:#5d6c62; --line:#d8e4db;
+    --bg:#e9eeeb; --card:#fff;
+    --answered:#0f9a45; --ragu:#f6a62a; --belum:#eef1ef; --belum-line:#c9d3cc;
+    --danger:#c0392b; --danger-bg:#fdecea;
+    --shadow:0 10px 28px rgba(8,58,28,.12); --sm:0 2px 8px rgba(8,58,28,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:14px}
+  .hidden{display:none !important}
+  img{max-width:100%;display:block}
+
+  .nkbanner{position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);color:#fff;
+    background:linear-gradient(135deg,#064a23,#0a7a38 52%,#0f9a45);padding:18px 16px 20px;display:flex;align-items:center;gap:14px;border:1px solid rgba(0,0,0,.05)}
+  .nkbanner::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 15px,transparent 15px 30px);pointer-events:none}
+  .nkbanner::before{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-d))}
+  .nk-crest{flex:0 0 auto;width:82px;height:82px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25);position:relative;z-index:1;overflow:hidden}
+  .nk-crest img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+  .nk-txt{position:relative;z-index:1;min-width:0}
+  .nk-txt .y{font-size:.64rem;font-weight:800;letter-spacing:.14em;color:var(--gold)}
+  .nk-txt .m{font-size:.8rem;font-weight:700;line-height:1.12;margin-top:1px}
+  .nk-txt .m b{font-size:1.12rem;font-weight:800;display:block}
+  .nk-txt .a{font-size:.58rem;opacity:.92;margin-top:4px}
+  .nk-pill{display:inline-block;margin-top:8px;background:var(--gold);color:var(--gold-ink);font-weight:800;font-size:.62rem;letter-spacing:.06em;padding:4px 11px;border-radius:999px}
+
+  .cbt-tag{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 2px;
+    font-size:.72rem;font-weight:800;letter-spacing:.14em;color:var(--g700)}
+  .cbt-tag::before,.cbt-tag::after{content:"";height:2px;width:30px;background:var(--gold);border-radius:2px}
+
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--sm);border:1px solid var(--line);padding:18px;margin-top:14px}
+  .card-h{display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:800;color:var(--g800);margin:0 0 4px}
+  .card-h .dot{width:9px;height:9px;border-radius:50%;background:var(--gold)}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 2px}
+  .chip{background:var(--g50);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.8rem;font-weight:700;color:var(--g700);flex:1;text-align:center;min-width:90px}
+  .chip b{display:block;font-size:1.05rem;color:var(--g800)}
+
+  .steps{margin:12px 0 0;padding-left:0;list-style:none;counter-reset:s}
+  .steps li{position:relative;padding:7px 0 7px 36px;font-size:.88rem;color:var(--muted);border-bottom:1px dashed var(--line)}
+  .steps li:last-child{border:none}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:6px;width:24px;height:24px;
+    background:var(--g100);color:var(--g700);font-weight:800;border-radius:50%;display:grid;place-items:center;font-size:.76rem}
+
+  label.fld{display:block;margin-top:13px;font-weight:700;font-size:.86rem}
+  label.fld span{color:var(--danger)}
+  .inp,.sel{width:100%;margin-top:6px;padding:13px 14px;border:1.5px solid var(--line);border-radius:11px;
+    font-size:1rem;font-family:inherit;background:#fbfdfb;color:var(--ink)}
+  .inp:focus,.sel:focus{outline:none;border-color:var(--g500);background:#fff;box-shadow:0 0 0 4px var(--g100)}
+  .err{color:var(--danger);font-size:.8rem;margin-top:6px;font-weight:700;display:none}
+  .err.show{display:block}
+
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;cursor:pointer;
+    font-family:inherit;font-weight:800;font-size:1rem;padding:15px 18px;border-radius:13px;transition:.12s}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--g700),var(--g500));color:#fff;box-shadow:0 8px 18px rgba(15,154,69,.32);margin-top:18px}
+  .btn-ghost{background:#fff;color:var(--g700);border:1.5px solid var(--line)}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-d));color:var(--gold-ink)}
+  .btn-danger{background:linear-gradient(135deg,#e05a3e,#c0392b);color:#fff}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .btn-sm{font-size:.86rem;padding:12px 10px}
+
+  .foot{text-align:center;color:var(--muted);font-size:.72rem;margin:20px 0 30px}
+  .foot b{color:var(--g700)}
+
+  .appbar{position:sticky;top:0;z-index:40;background:linear-gradient(135deg,var(--g800),var(--g600));color:#fff;
+    box-shadow:0 2px 12px rgba(8,58,28,.28)}
+  .appbar-in{max-width:760px;margin:0 auto;padding:9px 14px}
+  .ab-row{display:flex;align-items:center;gap:10px}
+  .logo-badge{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:#fff;overflow:hidden;
+    box-shadow:0 2px 6px rgba(0,0,0,.25);position:relative}
+  .logo-badge img{width:100%;height:100%;object-fit:cover;display:block}
+  .ab-title{flex:1;min-width:0}
+  .ab-title b{display:block;font-size:.9rem;font-weight:800;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ab-title small{font-size:.68rem;opacity:.85;font-weight:600}
+  .clock{flex:0 0 auto;text-align:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
+    border-radius:10px;padding:5px 10px;min-width:82px}
+  .clock .t{font-size:1.15rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+  .clock .l{font-size:.56rem;letter-spacing:.12em;opacity:.85;font-weight:700}
+  .clock.warn{background:#fff4d6;border-color:#f0c04a;color:#7a5600}
+  .clock.danger{background:#ffdede;border-color:#f3a9a9;color:#b32b1c;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.6}}
+  .peserta{display:flex;align-items:center;gap:7px;margin-top:8px;background:rgba(255,255,255,.12);
+    border-radius:9px;padding:6px 10px;font-size:.78rem;font-weight:600}
+  .peserta .av{width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--gold-ink);
+    display:grid;place-items:center;font-size:.7rem;font-weight:800}
+  .pbar{height:5px;background:rgba(255,255,255,.2);border-radius:9px;margin-top:8px;overflow:hidden}
+  .pbar > i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s;border-radius:9px}
+
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin:-18px -18px 14px;padding:12px 18px;
+    background:var(--g50);border-bottom:1px solid var(--line);border-radius:16px 16px 0 0}
+  .qhead .no{font-weight:800;color:var(--g800);font-size:.95rem}
+  .qhead .no b{color:var(--gold-d)}
+  .ragu-tag{display:none;align-items:center;gap:5px;font-size:.72rem;font-weight:800;color:#9a6500;background:#fff3d6;border:1px solid #f0cf7e;padding:4px 9px;border-radius:999px}
+  .ragu-tag.on{display:flex}
+  .qtext{font-size:1.1rem;font-weight:700;line-height:1.5;margin:0 0 2px}
+  .opts{margin-top:15px;display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border:1.5px solid var(--line);
+    border-radius:13px;cursor:pointer;background:#fbfdfb;transition:.12s;user-select:none}
+  .opt:active{transform:scale(.995)}
+  .opt .mk{flex:0 0 auto;width:30px;height:30px;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;
+    font-weight:800;color:var(--muted);background:#fff;font-size:.9rem}
+  .opt .tx{font-size:.97rem;padding-top:3px}
+  .opt.sel{border-color:var(--g500);background:var(--g50);box-shadow:0 0 0 3px var(--g100)}
+  .opt.sel .mk{background:var(--g600);border-color:var(--g600);color:#fff}
+
+  .acts{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:9px;margin-top:18px}
+  .acts .btn{margin-top:0}
+
+  .panel{margin-top:14px}
+  .panel-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;background:var(--g800);color:#fff;
+    border:none;font-family:inherit;font-weight:800;font-size:.9rem;padding:13px 16px;border-radius:13px;cursor:pointer}
+  .panel-toggle .cnt{font-size:.74rem;font-weight:700;background:rgba(255,255,255,.18);padding:3px 9px;border-radius:999px}
+  .panel-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 13px 13px;padding:14px;margin-top:-2px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.72rem;color:var(--muted);margin-bottom:12px;font-weight:600}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .grid{display:grid;grid-template-columns:repeat(8,1fr);gap:7px}
+  .grid button{aspect-ratio:1;border:1.5px solid var(--belum-line);background:var(--belum);border-radius:9px;
+    font-weight:800;font-family:inherit;font-size:.82rem;color:var(--muted);cursor:pointer}
+  .grid button.done{background:var(--answered);color:#fff;border-color:var(--answered)}
+  .grid button.ragu{background:var(--ragu);color:#fff;border-color:var(--ragu)}
+  .grid button.cur{outline:3px solid var(--g800);outline-offset:1px}
+  @media(max-width:360px){.grid{grid-template-columns:repeat(6,1fr)}}
+
+  .overlay{position:fixed;inset:0;background:rgba(8,40,20,.55);backdrop-filter:blur(3px);display:grid;place-items:center;z-index:100;padding:22px}
+  .modal{background:#fff;border-radius:18px;padding:24px 20px;max-width:390px;width:100%;box-shadow:var(--shadow)}
+  .modal h3{margin:0 0 6px;color:var(--g800);font-size:1.2rem;text-align:center}
+  .modal p{margin:0;color:var(--muted);font-size:.9rem;text-align:center}
+  .tally{display:flex;gap:10px;margin:16px 0}
+  .tally div{flex:1;text-align:center;border-radius:12px;padding:10px 4px;border:1px solid var(--line)}
+  .tally b{display:block;font-size:1.4rem}
+  .tally small{font-size:.68rem;color:var(--muted);font-weight:700}
+  .tally .d b{color:var(--answered)} .tally .r b{color:var(--ragu)} .tally .b b{color:var(--danger)}
+  .modal-acts{display:flex;gap:10px;margin-top:6px}
+  .modal-acts .btn{margin-top:0}
+  .spinner{width:46px;height:46px;border:4px solid var(--g100);border-top-color:var(--g600);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 14px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .check{width:68px;height:68px;margin:0 auto 12px;border-radius:50%;background:var(--g100);display:grid;place-items:center}
+  .check svg{width:38px;height:38px;stroke:var(--g600)}
+  .sum{display:flex;justify-content:center;gap:26px;margin:14px 0 2px}
+  .sum div{text-align:center} .sum b{display:block;font-size:1.5rem;color:var(--g700)} .sum small{font-size:.72rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="screen-start">
+  <div class="nkbanner">
+    <div class="nk-crest">
+      <img src="assets/logo.webp" alt="Logo MTs Nurul Kamal">
+    </div>
+    <div class="nk-txt">
+      <div class="y">YAYASAN NURUL KAMAL</div>
+      <div class="m">MADRASAH TSANAWIYAH<b>(MTs) NURUL KAMAL</b></div>
+      <div class="a">Sambirejo · Kec. Selupu Rejang · Kab. Rejang Lebong</div>
+      <span class="nk-pill">SOAL IPS · KELAS VII</span>
+    </div>
+  </div>
+
+  <div class="cbt-tag">SISTEM UJIAN BERBASIS KOMPUTER (CBT)</div>
+
+  <div class="chips">
+    <div class="chip"><b>50</b>Soal</div>
+    <div class="chip"><b id="durchip">90</b>Menit</div>
+    <div class="chip"><b>PG</b>Pilihan Ganda</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><span class="dot"></span>Data Peserta</div>
+    <label class="fld" for="nama">Nama Lengkap <span>*</span></label>
+    <input class="inp" id="nama" type="text" autocomplete="off" placeholder="Masukkan nama lengkap">
+    <div class="err" id="err-nama">Nama wajib diisi.</div>
+
+    <label class="fld" for="kelas">Kelas <span>*</span></label>
+    <select class="sel" id="kelas">
+      <option value="">— Pilih kelas —</option>
+      <option value="7A">7A</option><option value="7B">7B</option><option value="7C">7C</option>
+    </select>
+    <div class="err" id="err-kelas">Kelas wajib dipilih.</div>
+
+    <label class="fld" for="token">Token Ujian <span>*</span></label>
+    <input class="inp" id="token" type="text" autocomplete="off" placeholder="Token dari pengawas">
+    <div class="err" id="err-token">Token salah. Minta token yang benar kepada pengawas.</div>
+
+    <button class="btn btn-primary" id="btn-start">MASUK &amp; MULAI UJIAN &nbsp;→</button>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><span class="dot"></span>Petunjuk Ujian</div>
+    <ul class="steps">
+      <li>Tulis Nama dengan lengkap dan pilih kelas yang sesuai.</li>
+      <li>Isi Token Ujian yang diberikan pengawas sebelum ujian dimulai.</li>
+      <li>Kerjakan semua soal. Gunakan tombol <b>Ragu-ragu</b> untuk menandai soal yang ingin ditinjau ulang.</li>
+      <li>Semua soal <b>wajib dijawab</b> sebelum menekan <b>Akhiri Ujian</b>.</li>
+      <li>Jika waktu habis, jawaban terkirim otomatis. Pastikan internet stabil.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Dikembangkan oleh <b>Okmansyah</b> · MTs Nurul Kamal</p>
+</div>
+
+<div id="screen-exam" class="hidden">
+  <div class="appbar">
+    <div class="appbar-in">
+      <div class="ab-row">
+        <div class="logo-badge"><img src="assets/logo.webp" alt="logo"></div>
+        <div class="ab-title"><b>UJIAN IPS — KELAS VII</b><small>MTs Nurul Kamal · CBT</small></div>
+        <div class="clock" id="clock"><div class="t" id="clock-t">90:00</div><div class="l">SISA WAKTU</div></div>
+      </div>
+      <div class="peserta"><span class="av" id="av">A</span><span id="peserta-txt">Peserta</span></div>
+      <div class="pbar"><i id="pbar"></i></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card" id="qcard">
+      <div class="qhead">
+        <div class="no">SOAL NO. <b id="qno">1</b> / 50</div>
+        <div class="ragu-tag" id="ragutag">★ Ditandai ragu-ragu</div>
+      </div>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts"></div>
+
+      <div class="acts">
+        <button class="btn btn-ghost btn-sm" id="btn-prev">◀ Sebelum</button>
+        <button class="btn btn-gold btn-sm" id="btn-ragu">★ Ragu-ragu</button>
+        <button class="btn btn-primary btn-sm" id="btn-next" style="margin-top:0">Lanjut ▶</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <button class="panel-toggle" id="panel-toggle">
+        <span>📋 Daftar Soal</span><span class="cnt" id="panel-cnt">0 / 50 terjawab</span>
+      </button>
+      <div class="panel-body hidden" id="panel-body">
+        <div class="legend">
+          <span><i style="background:var(--answered)"></i>Dijawab</span>
+          <span><i style="background:var(--ragu)"></i>Ragu-ragu</span>
+          <span><i style="background:var(--belum);border:1px solid var(--belum-line)"></i>Belum</span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" id="btn-finish" style="margin-top:14px">⏹ AKHIRI UJIAN</button>
+    <p class="foot">Dikembangkan oleh <b>Okmansyah</b> · MTs Nurul Kamal</p>
+  </div>
+</div>
+
+<div class="overlay hidden" id="ov-confirm">
+  <div class="modal">
+    <h3 id="cf-title">Akhiri Ujian?</h3>
+    <p id="cf-msg">Periksa kembali jawabanmu sebelum mengakhiri.</p>
+    <div class="tally">
+      <div class="d"><b id="t-done">0</b><small>DIJAWAB</small></div>
+      <div class="r"><b id="t-ragu">0</b><small>RAGU</small></div>
+      <div class="b"><b id="t-belum">0</b><small>BELUM</small></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ghost" id="cf-cancel" style="margin-top:0">Kembali</button>
+      <button class="btn btn-danger" id="cf-ok" style="margin-top:0">Ya, Akhiri</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="ov-sending">
+  <div class="modal" style="text-align:center">
+    <div class="spinner"></div>
+    <h3>Mengirim jawaban…</h3>
+    <p>Mohon tunggu, jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<div class="overlay hidden" id="ov-done">
+  <div class="modal">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h3>Jawaban Terkirim!</h3>
+    <p>Terima kasih, <b id="done-nama"></b>. Jawabanmu sudah tersimpan.</p>
+    <div class="sum"><div><b id="done-ans">0</b><small>Terjawab</small></div><div><b>50</b><small>Total Soal</small></div></div>
+    <p style="margin-top:12px;font-size:.8rem">Silakan tunggu instruksi pengawas. Nilai diumumkan kemudian.</p>
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  action: "https://docs.google.com/forms/d/e/1FAIpQLScmM8CZkdJDWF_6XAlKVpGWqE2Z2FybQpclglfPNCh9xcSFzw/formResponse",
+  E_NAMA: "entry.1148626924",
+  E_KELAS: "entry.740830940",
+  E_TOKEN: "entry.46084004",
+  TOKEN_REGEX: /^[iI][pP][sS]7$/,
+  DURATION_MIN: 90
+};
+const LETTERS = ["A","B","C","D"];
+
+const QBANK = [
+["entry.730910887","Kebiasaan menyapu halaman dan aturan saat bermain atau beribadah di rumah merupakan contoh ...",["peraturan tertulis yang dibuat pemerintah","aturan tidak tertulis yang dibentuk keluarga","hukum adat yang berlaku di seluruh daerah","tata tertib yang ditetapkan sekolah"]],
+["entry.2025275086","Kata sejarah berasal dari kata syajarah yang memiliki arti ...",["pohon","waktu","peristiwa","cerita"]],
+["entry.461051648","Unsur-unsur sejarah terdiri atas ...",["manusia, benda, dan peristiwa","waktu, tempat, dan sumber","manusia, waktu, dan ruang","keluarga, masyarakat, dan negara"]],
+["entry.369568304","Letak suatu objek yang bersifat tetap terhadap sistem koordinat disebut ...",["lokasi relatif","lokasi geologis","lokasi sosial","lokasi absolut"]],
+["entry.16956213","Kabupaten Tanatidung awalnya termasuk Provinsi Kalimantan Timur, tetapi saat ini menjadi bagian Provinsi Kalimantan Utara. Contoh ini menunjukkan bahwa ...",["lokasi absolut dapat berubah mengikuti batas wilayah","lokasi relatif dapat berubah karena keadaan di sekitarnya","letak astronomis suatu daerah ikut berubah","koordinat garis lintang daerah tersebut berubah"]],
+["entry.2017231848","Lokasi di dekat jalan raya memiliki harga tanah yang lebih mahal, tetapi kurang sesuai untuk tempat tinggal karena ...",["adanya suara bising dan bahaya polusi udara dari kendaraan","sulit memperoleh air bersih","jauh dari pusat perbelanjaan","rawan terjadi banjir setiap tahun"]],
+["entry.158908882","Letak astronomis Indonesia berada pada ...",["11° LU – 6° LS dan 95° BT – 141° BT","6° LU – 11° LS dan 105° BT – 135° BT","6° LU – 11° LS dan 95° BT – 141° BT","6° LS – 11° LU dan 95° BT – 141° BT"]],
+["entry.1503876720","Secara geografis, Indonesia terletak di antara ...",["Benua Asia dan Eropa serta Samudra Hindia dan Atlantik","Benua Afrika dan Australia serta Samudra Pasifik dan Atlantik","Benua Asia dan Amerika serta Samudra Pasifik dan Arktik","Benua Asia dan Australia serta Samudra Hindia dan Pasifik"]],
+["entry.2014161046","Salah satu keuntungan letak geografis Indonesia adalah ...",["menjadi jalur perdagangan internasional","terhindar dari bencana alam","memiliki empat musim sepanjang tahun","tidak membutuhkan hubungan dengan negara lain"]],
+["entry.346168003","Waktu Indonesia Tengah (WITA) didasarkan pada garis meridian pangkal ...",["105° BT","120° BT","135° BT","150° BT"]],
+["entry.568794208","Pernyataan berikut yang merupakan contoh cuaca adalah ...",["Indonesia beriklim tropis","Suhu udara rata-rata di Yogyakarta pada tahun 2017 adalah 26,05 °C","Sore ini terjadi hujan lebat disertai angin di Kabupaten Bogor","Musim hujan di Indonesia terjadi antara bulan Oktober sampai Maret"]],
+["entry.93870437","Di Indonesia, musim kemarau biasanya terjadi antara bulan ...",["Oktober – Maret","Januari – Juni","Juli – Desember","April – September"]],
+["entry.1580505582","Berikut ini yang bukan termasuk unsur-unsur cuaca dan iklim adalah ...",["penyinaran matahari","jenis batuan","kelembaban udara","curah hujan"]],
+["entry.617635280","Indonesia dilalui dua jalur pegunungan dunia, yaitu ...",["Pegunungan Sirkum Pasifik dan Sirkum Mediterania","Pegunungan Himalaya dan Alpen","Pegunungan Andes dan Rocky","Pegunungan Sirkum Pasifik dan Appalachia"]],
+["entry.1205961875","Aktivitas vulkanik yang intens di Indonesia terjadi karena pertemuan tiga lempeng, yaitu ...",["Eurasia, Afrika, dan Pasifik","Indo-Australia, Amerika, dan Eurasia","Pasifik, Antartika, dan Afrika","Eurasia, Indo-Australia, dan Pasifik"]],
+["entry.94167759","Salah satu dampak positif letak geologis Indonesia adalah ...",["terhindar dari gempa bumi","tidak adanya gunung api aktif","tanah menjadi subur di kawasan dekat gunung berapi","suhu udara menjadi sama di semua wilayah"]],
+["entry.618936215","Orang yang ahli dalam membuat peta disebut ...",["geolog","kartografer","sejarawan","arkeolog"]],
+["entry.18607919","Skala yang dinyatakan dengan angka pecahan, misalnya 1:100.000, disebut skala ...",["numerik","verbal","grafis","relatif"]],
+["entry.1418275828","Jarak sebenarnya antara dua kota adalah 20 km, sedangkan jarak keduanya pada peta adalah 4 cm. Skala peta tersebut adalah ...",["1:50.000","1:200.000","1:500.000","1:5.000.000"]],
+["entry.1346540290","Warna coklat pada peta biasanya digunakan untuk menggambarkan ...",["perairan","hutan","batas wilayah","daerah perbukitan dan kontur"]],
+["entry.2003337130","Keterangan simbol-simbol pada peta yang berfungsi mempermudah pembaca menafsirkan peta disebut ...",["orientasi","legenda","skala","judul peta"]],
+["entry.278589327","Peta digital pada aplikasi pemesanan makanan daring bermanfaat bagi pengemudi untuk ...",["menemukan lokasi restoran dan alamat pemesan","menentukan harga makanan","menilai rasa makanan","menghitung jumlah pesanan"]],
+["entry.1298553023","Cerita rakyat diklasifikasikan menjadi tiga jenis, yaitu ...",["mitos, fabel, dan puisi","legenda, hikayat, dan pantun","dongeng, novel, dan cerpen","mitos, legenda, dan dongeng"]],
+["entry.1007326169","Prosa yang dianggap tidak benar-benar terjadi oleh pemilik ceritanya dan isinya kebanyakan penuh khayalan disebut ...",["mitos","legenda","dongeng","babad"]],
+["entry.1192089546","Prasasti, silsilah keluarga, dan buku harian termasuk sumber sejarah jenis ...",["lisan","tertulis","benda (artefak)","tradisi lisan"]],
+["entry.688987755","Kesaksian lisan oleh pelaku yang terlibat langsung dalam peristiwa sejarah disebut ...",["oral history","oral tradition","folktale","legend"]],
+["entry.1521844220","Salah satu ciri cerita rakyat adalah ...",["dibuat oleh pengarang tertentu","disebarkan hanya secara tertulis","hanya memiliki satu versi di semua daerah","penciptanya tidak diketahui dan menjadi milik bersama"]],
+["entry.1237804201","Manusia disebut makhluk sosial karena ...",["mampu hidup sendiri tanpa orang lain","hanya memikirkan kepentingan diri sendiri","tidak dapat memenuhi kebutuhannya sendiri dan membutuhkan bantuan orang lain","memiliki sumber daya yang tidak terbatas"]],
+["entry.191951388","Proses sosial seumur hidup untuk mempelajari pola budaya, perilaku, dan harapan disebut ...",["adaptasi","sosialisasi","akulturasi","mobilitas sosial"]],
+["entry.113725126","Keluarga inti (nuclear family) meliputi ...",["ayah, ibu, dan saudara kandung maupun angkat yang tinggal dalam satu rumah","kakek, nenek, paman, dan bibi","ayah, ibu, kakek, dan nenek","tetangga dan teman sepermainan"]],
+["entry.1106233228","Agen sosialisasi yang termasuk sosialisasi sekunder adalah ...",["keluarga inti saja","keluarga dan kerabat","sekolah, kelompok sepermainan, dan media massa","keluarga, kakek, dan nenek"]],
+["entry.1100954593","Menurut Jean Piaget, anak usia 7–11 tahun berada pada tahap ...",["sensorimotor","pra-operasional","operasional formal","operasional konkret"]],
+["entry.317701172","Jaring bagi nelayan dan payung ketika musim hujan merupakan contoh nilai ...",["material","vital","kerohanian","kebenaran"]],
+["entry.1246095406","Beribadah tepat waktu dan menjalankan perintah agama merupakan contoh nilai ...",["religius","keindahan","kebenaran","material"]],
+["entry.91829976","Pelanggaran terhadap norma kesopanan akan memperoleh sanksi berupa ...",["hukuman penjara dari pengadilan","rasa bersalah dari hati nurani","dosa sesuai ajaran agama","sindiran, celaan, teguran, bahkan diasingkan oleh masyarakat"]],
+["entry.2098841287","Aturan mengenai hukuman bagi pelanggar lalu lintas termasuk norma ...",["agama","kesusilaan","hukum","kesopanan"]],
+["entry.428130169","Interaksi antarwilayah terjadi karena setiap wilayah memiliki ...",["potensi sumber daya yang sama","potensi sumber daya dan kebutuhan yang berbeda","jumlah penduduk yang sama","kebutuhan yang sama"]],
+["entry.583949322","Basis ekonomi wilayah perdesaan pada umumnya adalah ...",["pertanian","industri","perdagangan","jasa"]],
+["entry.620234767","Daftar kebutuhan yang disusun berdasarkan tingkat kepentingan, dari yang paling mendesak hingga yang dapat ditunda, disebut ...",["skala grafis","skala peta","skala prioritas","skala produksi"]],
+["entry.778108699","Yang termasuk kebutuhan primer adalah ...",["televisi, radio, dan buku","jam tangan, tas, dan mobil mewah","rekreasi, hiburan, dan liburan","makanan, pakaian, dan tempat tinggal"]],
+["entry.2026643854","Kebutuhan yang dipenuhi setelah kebutuhan primer terpenuhi dan tidak mengganggu kelangsungan hidup jika belum terpenuhi disebut kebutuhan ...",["primer","sekunder","tersier","mendesak"]],
+["entry.1542921339","Membeli jam, tas, atau mobil mewah untuk meningkatkan status sosial termasuk kebutuhan ...",["primer","sekunder","tersier","mendesak"]],
+["entry.426083241","Kebutuhan akan pendidikan yang dipenuhi terus-menerus sampai akhir hayat termasuk kebutuhan ...",["mendesak","sekarang","sepanjang waktu","masa mendatang"]],
+["entry.487935650","Menabung mulai sekarang untuk melaksanakan ibadah haji di masa mendatang merupakan contoh kebutuhan ...",["sekarang","mendesak","sepanjang waktu","masa mendatang"]],
+["entry.1330300283","Pembangunan jembatan penghubung antardesa termasuk kebutuhan ...",["kelompok","individu","jasmani","rohani"]],
+["entry.382645109","Udara dan sinar matahari termasuk alat pemuas kebutuhan berupa ...",["barang ekonomis","barang bebas","barang produksi","barang substitusi"]],
+["entry.696586866","Nasi dan mi instan sebagai sumber karbohidrat yang dapat saling menggantikan disebut barang ...",["komplementer","konsumsi","substitusi","mentah"]],
+["entry.738619081","Kopi dan gula merupakan contoh barang ...",["substitusi","bebas","mentah","komplementer"]],
+["entry.991491431","Kayu gelondongan yang masih harus diolah menjadi meja dan pintu termasuk barang ...",["mentah","setengah jadi","jadi","bebas"]],
+["entry.1906686794","Menurut buku, semakin besar pendapatan seseorang maka ...",["kebutuhannya semakin sedikit","kebutuhannya tidak berubah","kebutuhannya juga semakin besar","kebutuhannya hanya primer"]]
+];
+
+const Q = QBANK.map(r=>({e:r[0], q:r[1], o:r[2]}));
+const TOTAL = Q.length;
+let cur = 0;
+let answers = {};
+let ragu = {};
+let student = {nama:"",kelas:"",token:""};
+let timeLeft = CONFIG.DURATION_MIN*60;
+let timerId = null;
+let submitted = false;
+
+const $ = id => document.getElementById(id);
+const SS_KEY = "cbtIPS7_";
+
+try{ const s=JSON.parse(sessionStorage.getItem(SS_KEY)); if(s){ answers=s.answers||{}; ragu=s.ragu||{}; student=s.student||student; cur=s.cur||0; if(typeof s.timeLeft==="number") timeLeft=s.timeLeft; } }catch(e){}
+function persist(){ try{ sessionStorage.setItem(SS_KEY, JSON.stringify({answers,ragu,student,cur,timeLeft})); }catch(e){} }
+
+$("durchip").textContent = CONFIG.DURATION_MIN;
+
+function clearErr(){ ["err-nama","err-kelas","err-token"].forEach(i=>$(i).classList.remove("show")); }
+$("btn-start").addEventListener("click", ()=>{
+  clearErr();
+  const nama=$("nama").value.trim(), kelas=$("kelas").value, token=$("token").value.trim();
+  let ok=true;
+  if(!nama){$("err-nama").classList.add("show");ok=false;}
+  if(!kelas){$("err-kelas").classList.add("show");ok=false;}
+  if(!CONFIG.TOKEN_REGEX.test(token)){$("err-token").classList.add("show");ok=false;}
+  if(!ok) return;
+  student={nama,kelas,token}; persist();
+  $("peserta-txt").textContent = nama+" · Kelas "+kelas;
+  $("av").textContent = (nama[0]||"A").toUpperCase();
+  $("screen-start").classList.add("hidden");
+  $("screen-exam").classList.remove("hidden");
+  buildGrid(); render(); startTimer(); window.scrollTo(0,0);
+});
+
+function fmt(s){const m=Math.floor(s/60),ss=s%60;return (m<10?"0":"")+m+":"+(ss<10?"0":"")+ss;}
+function startTimer(){
+  updTimer();
+  timerId=setInterval(()=>{ timeLeft--; if(timeLeft<=0){timeLeft=0;updTimer();clearInterval(timerId);autoSubmit();return;} if(timeLeft%5===0)persist(); updTimer(); },1000);
+}
+function updTimer(){
+  $("clock-t").textContent=fmt(timeLeft);
+  const c=$("clock"); c.classList.remove("warn","danger");
+  if(timeLeft<=60)c.classList.add("danger"); else if(timeLeft<=300)c.classList.add("warn");
+}
+
+function render(){
+  const it=Q[cur];
+  $("qno").textContent=cur+1;
+  $("qtext").textContent=(cur+1)+". "+it.q;
+  $("ragutag").classList.toggle("on", !!ragu[it.e]);
+  $("btn-ragu").textContent = ragu[it.e]?"★ Batal Ragu":"★ Ragu-ragu";
+  const opts=$("opts"); opts.innerHTML="";
+  it.o.forEach((text,i)=>{
+    const value=LETTERS[i]+". "+text;
+    const d=document.createElement("div");
+    d.className="opt"+(answers[it.e]===value?" sel":"");
+    d.innerHTML='<div class="mk">'+LETTERS[i]+'</div><div class="tx">'+text.replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</div>';
+    d.addEventListener("click",()=>{
+      answers[it.e]=value; persist();
+      [...opts.children].forEach(c=>c.classList.remove("sel")); d.classList.add("sel");
+      upd();
+      if(cur<TOTAL-1) setTimeout(()=>{cur++;render();window.scrollTo(0,0);},170);
+    });
+    opts.appendChild(d);
+  });
+  $("btn-prev").style.visibility=cur===0?"hidden":"visible";
+  $("btn-next").style.visibility=cur===TOTAL-1?"hidden":"visible";
+  upd();
+}
+function upd(){
+  const n=Object.keys(answers).length;
+  $("pbar").style.width=(n/TOTAL*100)+"%";
+  $("panel-cnt").textContent=n+" / "+TOTAL+" terjawab";
+  const g=$("grid");
+  if(g.children.length) [...g.children].forEach((b,i)=>{
+    const e=Q[i].e;
+    b.className=""; if(ragu[e])b.classList.add("ragu"); else if(answers[e])b.classList.add("done");
+    if(i===cur)b.classList.add("cur");
+  });
+}
+
+$("btn-prev").addEventListener("click",()=>{if(cur>0){cur--;render();window.scrollTo(0,0);}});
+$("btn-next").addEventListener("click",()=>{if(cur<TOTAL-1){cur++;render();window.scrollTo(0,0);}});
+$("btn-ragu").addEventListener("click",()=>{ const e=Q[cur].e; if(ragu[e])delete ragu[e]; else ragu[e]=1; persist(); render(); });
+$("panel-toggle").addEventListener("click",()=>{ $("panel-body").classList.toggle("hidden"); });
+function buildGrid(){
+  const g=$("grid"); g.innerHTML="";
+  for(let i=0;i<TOTAL;i++){ const b=document.createElement("button"); b.textContent=i+1;
+    b.addEventListener("click",()=>{cur=i;render();window.scrollTo(0,0);}); g.appendChild(b); }
+}
+
+function firstUnanswered(){for(let i=0;i<TOTAL;i++){if(!answers[Q[i].e])return i;}return -1;}
+$("btn-finish").addEventListener("click",()=>{
+  const done=Object.keys(answers).length, r=Object.keys(ragu).length, belum=TOTAL-done;
+  $("t-done").textContent=done; $("t-ragu").textContent=r; $("t-belum").textContent=belum;
+  if(belum>0){
+    $("cf-title").textContent="Belum Bisa Diakhiri";
+    $("cf-msg").innerHTML="Masih ada <b>"+belum+" soal</b> yang belum dijawab. Semua soal wajib dijawab sebelum mengakhiri ujian.";
+    $("cf-ok").textContent="Ke Soal Kosong"; $("cf-ok").className="btn btn-primary"; $("cf-ok").dataset.mode="goto";
+  }else{
+    $("cf-title").textContent="Akhiri Ujian?";
+    $("cf-msg").textContent="Semua soal sudah terjawab. Jawaban tidak dapat diubah setelah dikirim.";
+    $("cf-ok").textContent="Ya, Akhiri"; $("cf-ok").className="btn btn-danger"; $("cf-ok").dataset.mode="submit";
+  }
+  $("ov-confirm").classList.remove("hidden");
+});
+$("cf-cancel").addEventListener("click",()=>$("ov-confirm").classList.add("hidden"));
+$("cf-ok").addEventListener("click",()=>{
+  $("ov-confirm").classList.add("hidden");
+  if($("cf-ok").dataset.mode==="goto"){ cur=firstUnanswered(); render(); window.scrollTo(0,0); }
+  else doSubmit(false);
+});
+function autoSubmit(){
+  Q.forEach(it=>{ if(!answers[it.e]) answers[it.e]="A. "+it.o[0]; });
+  alert("Waktu habis! Jawaban dikirim otomatis.");
+  doSubmit(true);
+}
+
+function doSubmit(){
+  if(submitted) return; submitted=true;
+  if(timerId) clearInterval(timerId);
+  $("ov-sending").classList.remove("hidden");
+  const f=document.createElement("form");
+  f.action=CONFIG.action; f.method="POST"; f.target="gform_target";
+  const add=(n,v)=>{const i=document.createElement("input");i.type="hidden";i.name=n;i.value=v;f.appendChild(i);};
+  add(CONFIG.E_NAMA,student.nama); add(CONFIG.E_KELAS,student.kelas); add(CONFIG.E_TOKEN,student.token);
+  Q.forEach(it=>{ const v=answers[it.e]; if(v) add(it.e,v); });
+  add("fvv","1"); add("pageHistory","0,1"); add("fbzx",String(Math.floor(Math.random()*9e18)+1e18));
+  let ifr=$("gform_target");
+  if(!ifr){ifr=document.createElement("iframe");ifr.name="gform_target";ifr.id="gform_target";ifr.style.display="none";document.body.appendChild(ifr);}
+  ifr.addEventListener("load",onDone,{once:true});
+  document.body.appendChild(f); f.submit();
+  setTimeout(onDone,5000);
+}
+let doneShown=false;
+function onDone(){
+  if(doneShown) return; doneShown=true;
+  try{ sessionStorage.removeItem(SS_KEY); }catch(e){}
+  $("ov-sending").classList.add("hidden");
+  $("done-nama").textContent=student.nama;
+  $("done-ans").textContent=Object.keys(answers).length;
+  $("ov-done").classList.remove("hidden");
+}
+
+window.addEventListener("beforeunload",(e)=>{ if(!submitted && !$("screen-exam").classList.contains("hidden")){ e.preventDefault(); e.returnValue=""; } });
+</script>
+</body>
+</html>
