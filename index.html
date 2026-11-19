@@ -194,9 +194,9 @@
     </select>
     <div class="err" id="err-kelas">Kelas wajib dipilih.</div>
 
-    <label class="fld" for="token">Token Ujian <span>*</span></label>
-    <input class="inp" id="token" type="text" autocomplete="off" placeholder="Token dari pengawas">
-    <div class="err" id="err-token">Token salah. Minta token yang benar kepada pengawas.</div>
+    <label class="fld" for="noujian">No. Ujian Peserta <span>*</span></label>
+    <input class="inp" id="noujian" type="text" autocomplete="off" maxlength="30" placeholder="Masukkan no. ujian peserta">
+    <div class="err" id="err-noujian">No. ujian peserta wajib diisi.</div>
 
     <button class="btn btn-primary" id="btn-start">MASUK &amp; MULAI UJIAN &nbsp;→</button>
   </div>
@@ -205,7 +205,7 @@
     <div class="card-h"><span class="dot"></span>Petunjuk Ujian</div>
     <ul class="steps">
       <li>Tulis Nama dengan lengkap dan pilih kelas yang sesuai.</li>
-      <li>Isi Token Ujian yang diberikan pengawas sebelum ujian dimulai.</li>
+      <li>Isi No. Ujian Peserta sesuai kartu ujian.</li>
       <li>Kerjakan semua soal. Gunakan tombol <b>Ragu-ragu</b> untuk menandai soal yang ingin ditinjau ulang.</li>
       <li>Semua soal <b>wajib dijawab</b> sebelum menekan <b>Akhiri Ujian</b>.</li>
       <li>Jika waktu habis, jawaban terkirim otomatis. Pastikan internet stabil.</li>
@@ -302,8 +302,7 @@ const CONFIG = {
   action: "https://docs.google.com/forms/d/e/1FAIpQLScmM8CZkdJDWF_6XAlKVpGWqE2Z2FybQpclglfPNCh9xcSFzw/formResponse",
   E_NAMA: "entry.1148626924",
   E_KELAS: "entry.740830940",
-  E_TOKEN: "entry.46084004",
-  TOKEN_REGEX: /^[iI][pP][sS]7$/,
+  E_NOUJIAN: "entry.46084004",
   DURATION_MIN: 90
 };
 const LETTERS = ["A","B","C","D"];
@@ -366,7 +365,7 @@ const TOTAL = Q.length;
 let cur = 0;
 let answers = {};
 let ragu = {};
-let student = {nama:"",kelas:"",token:""};
+let student = {nama:"",kelas:"",noujian:""};
 let timeLeft = CONFIG.DURATION_MIN*60;
 let timerId = null;
 let submitted = false;
@@ -379,16 +378,16 @@ function persist(){ try{ sessionStorage.setItem(SS_KEY, JSON.stringify({answers,
 
 $("durchip").textContent = CONFIG.DURATION_MIN;
 
-function clearErr(){ ["err-nama","err-kelas","err-token"].forEach(i=>$(i).classList.remove("show")); }
+function clearErr(){ ["err-nama","err-kelas","err-noujian"].forEach(i=>$(i).classList.remove("show")); }
 $("btn-start").addEventListener("click", ()=>{
   clearErr();
-  const nama=$("nama").value.trim(), kelas=$("kelas").value, token=$("token").value.trim();
+  const nama=$("nama").value.trim(), kelas=$("kelas").value, noujian=$("noujian").value.trim();
   let ok=true;
   if(!nama){$("err-nama").classList.add("show");ok=false;}
   if(!kelas){$("err-kelas").classList.add("show");ok=false;}
-  if(!CONFIG.TOKEN_REGEX.test(token)){$("err-token").classList.add("show");ok=false;}
+  if(!noujian){$("err-noujian").classList.add("show");ok=false;}
   if(!ok) return;
-  student={nama,kelas,token}; persist();
+  student={nama,kelas,noujian}; persist();
   $("peserta-txt").textContent = nama+" · Kelas "+kelas;
   $("av").textContent = (nama[0]||"A").toUpperCase();
   $("screen-start").classList.add("hidden");
@@ -487,7 +486,7 @@ function doSubmit(){
   const f=document.createElement("form");
   f.action=CONFIG.action; f.method="POST"; f.target="gform_target";
   const add=(n,v)=>{const i=document.createElement("input");i.type="hidden";i.name=n;i.value=v;f.appendChild(i);};
-  add(CONFIG.E_NAMA,student.nama); add(CONFIG.E_KELAS,student.kelas); add(CONFIG.E_TOKEN,student.token);
+  add(CONFIG.E_NAMA,student.nama); add(CONFIG.E_KELAS,student.kelas); add(CONFIG.E_NOUJIAN,student.noujian);
   Q.forEach(it=>{ const v=answers[it.e]; if(v) add(it.e,v); });
   add("fvv","1"); add("pageHistory","0,1"); add("fbzx",String(Math.floor(Math.random()*9e18)+1e18));
   let ifr=$("gform_target");
